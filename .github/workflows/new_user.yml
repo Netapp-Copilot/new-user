@@ -43,8 +43,7 @@ jobs:
       - name: Comment on issue
         uses: octokit/request-action@v2.x
         with:
-          route: POST /repos/{owner}/{repo}/issues/{issue_number}/comments
-          owner: ${{ github.repository_owner }}
+          route: POST /repos/{repo}/issues/{issue_number}/comments
           repo: ${{ github.repository }}
           issue_number: ${{ github.event.issue.number }}
           body: 'You now have Access to Copilot '
@@ -54,8 +53,7 @@ jobs:
       - name: Close issue
         uses: octokit/request-action@v2.x
         with:
-          route: PATCH /repos/{owner}/{repo}/issues/{issue_number}
-          owner: ${{ github.repository_owner }}
+          route: PATCH /repos/{repo}/issues/{issue_number}
           repo: ${{ github.repository }}
           issue_number: ${{ github.event.issue.number }}
           state: closed
