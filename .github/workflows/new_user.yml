@@ -8,10 +8,33 @@ jobs:
   print_username:
     runs-on: ubuntu-latest
     steps:
+
+      - name: Check if user is a member of the organization
+        id: check_membership
+        uses: octokit/request-action@v2.x
+        with:
+          route: GET /orgs/{org}/members/{username}
+          org: Netapp-Copilot
+          username: ${{ github.event.issue.user.login }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}
+        continue-on-error: true
+        
       - name: Add user to organization
+        if: steps.check_membership.outcome == 'failure'
         uses: octokit/request-action@v2.x
         with:
           route: PUT /orgs/{org}/memberships/{username}
+          org: Netapp-Copilot
+          username: ${{ github.event.issue.user.login }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}
+
+      - name: Add user to team
+        if: steps.check_membership.outcome == 'success'
+        uses: octokit/request-action@v2.x
+        with:
+          route: PUT /orgs/{org}/teams/active-users/memberships/{username}
           org: Netapp-Copilot
           username: ${{ github.event.issue.user.login }}
         env:
@@ -24,7 +47,7 @@ jobs:
           owner: ${{ github.repository_owner }}
           repo: ${{ github.repository }}
           issue_number: ${{ github.event.issue.number }}
-          body: 'You have been added to the organization. Welcome!'
+          body: 'You now have Access to Copilot '
         env:
           GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}
 
@@ -38,3 +61,4 @@ jobs:
           state: closed
         env:
           GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}
+
