@@ -1,6 +1,7 @@
 ---
 name: Access to Copilot
 description: Request access to Copilot
+title: "Access to Copilot"
 
 body:
 - type: markdown
