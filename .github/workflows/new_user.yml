@@ -1,4 +1,4 @@
-name: Print Username
+name: Add user to org
 
 on:
   issues:
