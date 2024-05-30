@@ -31,7 +31,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}
 
       - name: Add user to team
-        if: steps.check_membership.outcome == 'success'
         uses: octokit/request-action@v2.x
         with:
           route: PUT /orgs/{org}/teams/active-users/memberships/{username}
