@@ -11,6 +11,7 @@ body:
 
 - type: input
   attributes:
+    title: Access to Copilot
     label: Netapp Email 
     description: >
       What is your netapp email?
