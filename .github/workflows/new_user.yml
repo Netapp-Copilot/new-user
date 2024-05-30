@@ -9,4 +9,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Print the username
-        run: echo "The username is ${{ github.event.issue.user.login }}"
+        run: | 
+          USERNAME=$(echo '${{ github.event.issue.user.login }}')
+          echo "::set-output name=username::$USERNAME"
+      - name: Add user to organization
+        uses: octokit/request-action@v2.x
+        with:
+          route: PUT /orgs/{org}/memberships/{username}
+          org: Netapp-Copilot
+          username: ${{ steps.extract.outputs.username }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}
