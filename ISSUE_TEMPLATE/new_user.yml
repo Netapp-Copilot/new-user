@@ -1,0 +1,9 @@
+---
+name: Access to Copilot
+description: Request access to Copilot
+
+body:
+- type: markdown
+  attributes:
+    value: >
+      **Please hit submit to gain access to Copilot**
