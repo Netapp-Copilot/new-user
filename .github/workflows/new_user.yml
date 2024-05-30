@@ -16,3 +16,25 @@ jobs:
           username: ${{ github.event.issue.user.login }}
         env:
           GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}
+
+      - name: Comment on issue
+        uses: octokit/request-action@v2.x
+        with:
+          route: POST /repos/{owner}/{repo}/issues/{issue_number}/comments
+          owner: ${{ github.repository_owner }}
+          repo: ${{ github.repository }}
+          issue_number: ${{ github.event.issue.number }}
+          body: 'You have been added to the organization. Welcome!'
+        env:
+          GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}
+
+      - name: Close issue
+        uses: octokit/request-action@v2.x
+        with:
+          route: PATCH /repos/{owner}/{repo}/issues/{issue_number}
+          owner: ${{ github.repository_owner }}
+          repo: ${{ github.repository }}
+          issue_number: ${{ github.event.issue.number }}
+          state: closed
+        env:
+          GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}
