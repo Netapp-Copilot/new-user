@@ -1,14 +1,12 @@
-name: Add user to organization on issue
+name: Print Username
 
 on:
   issues:
     types: [opened]
 
 jobs:
-  add_user:
+  print_username:
     runs-on: ubuntu-latest
     steps:
-      - name: Extract username from issue
-        id: extract
-        run: |
-          echo ${{ github.event.issue.actor }}
+      - name: Print the username
+        run: echo "The username is ${{ github.event.issue.user.login }}"
