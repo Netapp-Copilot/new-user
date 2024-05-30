@@ -7,3 +7,13 @@ body:
   attributes:
     value: >
       **Please hit submit to gain access to Copilot**
+
+
+- type: input
+  attributes:
+    label: Netapp Email 
+    description: >
+      What is your netapp email?
+    placeholder: ontap@netapp.com
+  validations:
+    required: true
