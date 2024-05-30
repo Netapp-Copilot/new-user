@@ -1,0 +1,14 @@
+name: Add user to organization on issue
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  add_user:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Extract username from issue
+        id: extract
+        run: |
+          echo ${{ github.event.issue.actor }}
