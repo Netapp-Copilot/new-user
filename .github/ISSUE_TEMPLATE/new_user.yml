@@ -18,3 +18,25 @@ body:
     placeholder: ontap@netapp.com
   validations:
     required: true
+
+- type: markdown
+  attributes:
+    value: >
+      Where can I use co-pilot for NetApp development?
+      Github Co-pilot users must follow the rules for GenAI outlined in legal's GenAI Preliminary Guidance.
+      
+      Always check the doc to see if it has become more permissive, but as of 3/5/24, the guidance is:
+      
+      · For internal infrastructure and services in NetApp engineering:
+      
+      You may use approved secure sandboxes designated for internal infrastructure and services purposes for any use case.
+      
+      · For product development (all other):
+      
+      You may use approved secure sandboxes designated for product development purposes for the following internal use cases:
+      
+      Knowledge search/chat (no copying of output permitted)
+      Unit testing, test automation and test infrastructure (such test code must not be distributed as part of any source or binary code of any product/service). Test code may be checked in to the same repository as product code. Test code may be distributed but must be independent of the product.
+      Code comments that are only visible inside of NetApp may be added directly to product source files, provided the comments do not ship to customers (for example, if the comments are compiled out as part of creating the product.).
+      Log and failure analyses.
+      Bug identification.
