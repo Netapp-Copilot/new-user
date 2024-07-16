@@ -1,6 +1,6 @@
 ---
 name: Access to Copilot
-description: Request access to Copilot
+description: Request access to Copilot for new and returning users
 title: "Access to Copilot"
 
 body:
@@ -14,7 +14,7 @@ body:
   attributes:
     label: Netapp Email 
     description: >
-      What is your netapp email?
+      What is your NetApp email?
     placeholder: ontap@netapp.com
   validations:
     required: true
