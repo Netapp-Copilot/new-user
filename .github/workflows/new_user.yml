@@ -1,11 +1,11 @@
-name: Add user to org
+ name: Add user to org
 
 on:
   issues:
     types: [opened]
 
 jobs:
-  print_username:
+  add_user_to_copilot:
     runs-on: ubuntu-latest
     steps:
 
