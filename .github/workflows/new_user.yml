@@ -1,11 +1,11 @@
- name: Add user to org
+name: Add user to org
 
 on:
   issues:
     types: [opened]
 
 jobs:
-  add_user_to_copilot:
+  print_username:
     runs-on: ubuntu-latest
     steps:
 
@@ -58,4 +58,3 @@ jobs:
           state: closed
         env:
           GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}
-
