@@ -36,7 +36,11 @@ body:
       You may use approved secure sandboxes designated for product development purposes for the following internal use cases:
       
       - Knowledge search/chat (no copying of output permitted)
+      
       - Unit testing, test automation and test infrastructure (such test code must not be distributed as part of any source or binary code of any product/service). Test code may be checked in to the same repository as product code. Test code may be distributed but must be independent of the product.
+      
       - Code comments that are only visible inside of NetApp may be added directly to product source files, provided the comments do not ship to customers (for example, if the comments are compiled out as part of creating the product.).
+      
       - Log and failure analyses.
+      
       - Bug identification.
