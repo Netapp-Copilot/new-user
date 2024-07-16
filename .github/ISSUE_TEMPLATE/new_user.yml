@@ -23,6 +23,7 @@ body:
   attributes:
     value: >
       # Where can I use co-pilot for NetApp development?
+      
       Github Co-pilot users must follow the rules for GenAI outlined in legal's GenAI Preliminary Guidance.
       
       Always check the doc to see if it has become more permissive, but as of 3/5/24, the guidance is:
