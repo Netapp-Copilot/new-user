@@ -27,7 +27,7 @@ body:
       
       Always check the doc to see if it has become more permissive, but as of 3/5/24, the guidance is:
       
-      -- For internal infrastructure and services in NetApp engineering:
+          - For internal infrastructure and services in NetApp engineering:
       
       You may use approved secure sandboxes designated for internal infrastructure and services purposes for any use case.
       
