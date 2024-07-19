@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    run-on: self-hosted
+    runs-on: self-hosted
   
     steps:
       - name: Check out code
