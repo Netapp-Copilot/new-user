@@ -29,6 +29,7 @@ def main():
                 continue
             netapp_username = netapp_username.lower()
             if netapp_username in ng_usernames:
+                print(f"Adding user {github_username} to Copilot")
                 add_user_to_team(github_username, token)
                 comment_on_issue(issue['number'], f"User {github_username} has been added to Copilot", token)
                 close_issue(issue['number'], token)
@@ -41,6 +42,7 @@ def get_netapp_username(issue):
     print(issue['body'])
     if match:
         netapp_username = match.group(1)
+        print(netapp_username + " found")
         return netapp_username
     else:
         print(f"Issue: {issue['title']} - NetApp Username not found")
@@ -48,6 +50,7 @@ def get_netapp_username(issue):
     
 def add_user_to_team(username, token):
     """Add a user to the team."""
+    print(f"Adding user {username} to Copilot")
     headers = {
     'Authorization': f'token {token}',
     'Accept': 'application/vnd.github.v3+json',}
@@ -57,6 +60,7 @@ def add_user_to_team(username, token):
 
 def comment_on_issue(issue_number, comment, token):
     """Post a comment on an issue."""
+    print(f"Commenting on issue {issue_number}")
     headers = {
     'Authorization': f'token {token}',
     'Accept': 'application/vnd.github.v3+json',}
@@ -67,6 +71,7 @@ def comment_on_issue(issue_number, comment, token):
 
 def close_issue(issue_number, token):
     """Close an issue."""
+    print(f"Closing issue {issue_number}")
     headers = {
     'Authorization': f'token {token}',
     'Accept': 'application/vnd.github.v3+json',}
