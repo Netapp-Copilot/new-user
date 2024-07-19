@@ -30,31 +30,42 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}
 
-      - name: Add user to team
-        uses: octokit/request-action@v2.x
-        with:
-          route: PUT /orgs/{org}/teams/active-users/memberships/{username}
-          org: Netapp-Copilot
-          username: ${{ github.event.issue.user.login }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}
-
-      - name: Comment on issue
+      - name: Welcome user
         uses: octokit/request-action@v2.x
         with:
           route: POST /repos/{repo}/issues/{issue_number}/comments
           repo: ${{ github.repository }}
           issue_number: ${{ github.event.issue.number }}
-          body: 'You now have Access to Copilot '
+          body: 'Hello @${{ github.actor }}, please make sure to add your self to ng-github-users using the [Netapp Group Management tool](https://nag.netapp.com/). Do note it can take up to an hour for the Netapp Group Management tool to add your to the Azure login group. If you have issues with the tool please reach out to the helpdesk@netapp.com.
+          Once you've been added to the group you will get an automated email from Github letting you know you have Github access. This ticket will also get update and closed.'
         env:
           GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}
 
-      - name: Close issue
-        uses: octokit/request-action@v2.x
-        with:
-          route: PATCH /repos/{repo}/issues/{issue_number}
-          repo: ${{ github.repository }}
-          issue_number: ${{ github.event.issue.number }}
-          state: closed
-        env:
-          GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}
+      # - name: Add user to team
+      #   uses: octokit/request-action@v2.x
+      #   with:
+      #     route: PUT /orgs/{org}/teams/active-users/memberships/{username}
+      #     org: Netapp-Copilot
+      #     username: ${{ github.event.issue.user.login }}
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}
+
+      # - name: Comment on issue
+      #   uses: octokit/request-action@v2.x
+      #   with:
+      #     route: POST /repos/{repo}/issues/{issue_number}/comments
+      #     repo: ${{ github.repository }}
+      #     issue_number: ${{ github.event.issue.number }}
+      #     body: 'You now have Access to Copilot '
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}
+
+      # - name: Close issue
+      #   uses: octokit/request-action@v2.x
+      #   with:
+      #     route: PATCH /repos/{repo}/issues/{issue_number}
+      #     repo: ${{ github.repository }}
+      #     issue_number: ${{ github.event.issue.number }}
+      #     state: closed
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}

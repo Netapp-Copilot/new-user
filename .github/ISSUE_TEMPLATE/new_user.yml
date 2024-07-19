@@ -7,15 +7,16 @@ body:
 - type: markdown
   attributes:
     value: >
-      **Please hit submit to gain access to Copilot**
+      Getting access to Copilot is easy! Just fill out the form below and we'll get you set up in no time. 
+      Please fill in your username below, read over the GenAI Preliminary Guidance, and submit your request with the green button at the bottom of the page.
 
 
 - type: input
   attributes:
-    label: Netapp Email 
+    label: Netapp Username 
     description: >
-      What is your NetApp email?
-    placeholder: ontap@netapp.com
+      What is your NetApp username?
+    placeholder: hitz
   validations:
     required: true
 
