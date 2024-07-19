@@ -65,7 +65,7 @@ def comment_on_issue(issue_number, comment, token):
     headers = {
     'Authorization': f'token {token}',
     'Accept': 'application/vnd.github.v3+json',}
-    url = f'https://api.github.com/repos/Netapp-Copilot/active-users/issues/{issue_number}/comments'
+    url = f'https://api.github.com/repos/Netapp-Copilot/new-user/issues/{issue_number}/comments'
     data = {'body': comment}
     response = requests.post(url, json=data, headers=headers)
     print(response)
@@ -78,7 +78,7 @@ def close_issue(issue_number, token):
     headers = {
     'Authorization': f'token {token}',
     'Accept': 'application/vnd.github.v3+json',}
-    url = f'https://api.github.com/repos/Netapp-Copilot/active-users/issues/{issue_number}'
+    url = f'https://api.github.com/repos/Netapp-Copilot/new-user/issues/{issue_number}'
     data = {'state': 'closed'}
     response = requests.patch(url, json=data, headers=headers)
     print(response)
