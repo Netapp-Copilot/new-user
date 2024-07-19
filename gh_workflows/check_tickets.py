@@ -69,7 +69,7 @@ def comment_on_issue(issue_number, comment, token):
     data = {'body': comment}
     response = requests.post(url, json=data, headers=headers)
     print(response)
-    print(response.to_json())
+    print(response.json())
     return response.status_code == 201
 
 def close_issue(issue_number, token):
@@ -82,7 +82,7 @@ def close_issue(issue_number, token):
     data = {'state': 'closed'}
     response = requests.patch(url, json=data, headers=headers)
     print(response)
-    print(response.to_json())
+    print(response.json())
     return response.status_code == 200
 
 def get_ng_users():
