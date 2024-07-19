@@ -2,7 +2,7 @@ import requests
 import os
 import re
 
-info_pattern = re.compile(r'Netapp Username\s*:\s*(\S+)') 
+info_pattern = re.compile(r'### Netapp Username\s*\n\s*(\S+)')
 
 
 def main():
