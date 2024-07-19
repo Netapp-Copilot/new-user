@@ -38,6 +38,7 @@ def main():
 def get_netapp_username(issue):
         # Extract NetApp username from the issue body
     match = info_pattern.search(issue['body'])
+    print(issue['body'])
     if match:
         netapp_username = match.group(1)
         return netapp_username
