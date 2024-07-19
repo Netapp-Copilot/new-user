@@ -56,6 +56,7 @@ def add_user_to_team(username, token):
     'Accept': 'application/vnd.github.v3+json',}
     url = f'https://api.github.com/orgs/Netapp-Copilot/teams/active-users/memberships/{username}'
     response = requests.put(url, headers=headers)
+    print(response)
     return response.status_code == 200
 
 def comment_on_issue(issue_number, comment, token):
@@ -67,6 +68,7 @@ def comment_on_issue(issue_number, comment, token):
     url = f'https://api.github.com/repos/Netapp-Copilot/active-users/issues/{issue_number}/comments'
     data = {'body': comment}
     response = requests.post(url, json=data, headers=headers)
+    print(response)
     return response.status_code == 201
 
 def close_issue(issue_number, token):
@@ -78,6 +80,7 @@ def close_issue(issue_number, token):
     url = f'https://api.github.com/repos/Netapp-Copilot/active-users/issues/{issue_number}'
     data = {'state': 'closed'}
     response = requests.patch(url, json=data, headers=headers)
+    print(response)
     return response.status_code == 200
 
 def get_ng_users():
