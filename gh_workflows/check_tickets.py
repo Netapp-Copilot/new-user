@@ -74,7 +74,7 @@ def comment_on_issue(issue_number, comment, token):
 
 def close_issue(issue_number, token):
     """Close an issue."""
-    print(f"Closing issue {issue_number}")
+    print(f"Closing issue {issue_number}, if you have any issues please reach out to ng-github-admins@netapp.com")
     headers = {
     'Authorization': f'token {token}',
     'Accept': 'application/vnd.github.v3+json',}
