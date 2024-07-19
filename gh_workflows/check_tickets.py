@@ -35,7 +35,7 @@ def main():
                 created_at = created_at.replace(tzinfo=timezone.utc)  # Make it timezone-aware, adjust accordingly
                 now = datetime.now(timezone.utc)  # Current time in UTC, adjust if using a different timezone
                 time_diff = now - created_at
-                if time_diff >= timedelta(minutes=90):
+                if time_diff >= timedelta(minutes=60):
                     print(f"Adding user {github_username} to Copilot")
                     add_user_to_team(github_username, token)
                     comment_on_issue(issue['number'], f"User {github_username} has been added to Copilot.\n 
