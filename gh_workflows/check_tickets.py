@@ -1,6 +1,7 @@
 import requests
 import os
 import re
+from datetime import datetime, timedelta, timezone
 
 info_pattern = re.compile(r'### Netapp Username\s*\n\s*(\S+)')
 
@@ -29,10 +30,18 @@ def main():
                 continue
             netapp_username = netapp_username.lower()
             if netapp_username in ng_usernames:
-                print(f"Adding user {github_username} to Copilot")
-                add_user_to_team(github_username, token)
-                comment_on_issue(issue['number'], f"User {github_username} has been added to Copilot", token)
-                close_issue(issue['number'], token)
+                created_at_str = issue['created_at']  # The creation time in ISO 8601 format
+                created_at = datetime.strptime(created_at_str, '%Y-%m-%dT%H:%M:%SZ')  # Parse the creation time
+                created_at = created_at.replace(tzinfo=timezone.utc)  # Make it timezone-aware, adjust accordingly
+                now = datetime.now(timezone.utc)  # Current time in UTC, adjust if using a different timezone
+                time_diff = now - created_at
+                if time_diff >= timedelta(minutes=90):
+                    print(f"Adding user {github_username} to Copilot")
+                    add_user_to_team(github_username, token)
+                    comment_on_issue(issue['number'], f"User {github_username} has been added to Copilot.\n 
+                                     For SecLab/BigTop users there are special step on the confluence page that need to be followed to complete the set up https://confluence.ngage.netapp.com/display/NGAGE/Copilot \n 
+                                     For OpenLab users please follow the standard steps here https://docs.github.com/en/copilot/using-github-copilot/getting-code-suggestions-in-your-ide-with-github-copilot", token)
+                    close_issue(issue['number'], token)
     else:
         print(f"Failed to retrieve issues. Status code: {response.status_code}")
 

@@ -37,7 +37,8 @@ jobs:
           repo: ${{ github.repository }}
           issue_number: ${{ github.event.issue.number }}
           body: >
-            Hello @${{ github.actor }}, please make sure to add your self to ng-github-users using the [Netapp Group Management tool](https://nag.netapp.com/). Do note it can take up to an hour for the Netapp Group Management tool to add you to the Azure login group. If you have issues with the tool please reach out to helpdesk@netapp.com.
-            Once you've been added to the group, you will get an automated email from Github letting you know you have Github access. This ticket will also get updated and closed.
+            Hello @${{ github.actor }}, please make sure to add your self to ng-github-users using the [Netapp Group Management tool](https://nag.netapp.com/). Do note it can take about 1 to 2 hours for the Netapp Group Management tool to add you to the Azure login group. If you have issues with the tool please reach out to helpdesk@netapp.com.
+
+            Once you've been added to the NG group. You will receive an email from Github letting you know you now have access to Copilot. This ticket will also get updated letting you now have access to copilot. If you have any questions please reach out to ng-github-admins@netapp.com
         env:
           GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}
