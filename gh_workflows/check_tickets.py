@@ -25,11 +25,13 @@ def main():
         for issue in issues:
             netapp_username = get_netapp_username(issue)
             github_username = issue['user']['login']
+            print(github_username)
             if not netapp_username:
                 print(f"Failed to retrieve NetApp Username from issue: [{issue['title']}]({issue['html_url']})")
                 continue
             netapp_username = netapp_username.lower()
             if netapp_username in ng_usernames:
+                print(f"NetApp username {netapp_username} found in NG directory")
                 created_at_str = issue['created_at']  # The creation time in ISO 8601 format
                 created_at = datetime.strptime(created_at_str, '%Y-%m-%dT%H:%M:%SZ')  # Parse the creation time
                 created_at = created_at.replace(tzinfo=timezone.utc)  # Make it timezone-aware, adjust accordingly
@@ -44,6 +46,8 @@ def main():
                                     "For OpenLab users please follow the standard steps here https://docs.github.com/en/copilot/using-github-copilot/getting-code-suggestions-in-your-ide-with-github-copilot", 
                                     token)
                     close_issue(issue['number'], token)
+            else:
+                print(f"NetApp username {netapp_username} not found in NG directory")
     else:
         print(f"Failed to retrieve issues. Status code: {response.status_code}")
 
