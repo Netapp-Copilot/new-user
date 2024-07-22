@@ -4,6 +4,7 @@ import re
 from datetime import datetime, timedelta, timezone
 
 info_pattern = re.compile(r'### Netapp Username\s*\n\s*(\S+)')
+owners = ['suhasbshekar', 'carchi8py', 'wenjun666', 'chuyich']
 
 
 def main():
@@ -37,6 +38,7 @@ def main():
                 created_at = created_at.replace(tzinfo=timezone.utc)  # Make it timezone-aware, adjust accordingly
                 now = datetime.now(timezone.utc)  # Current time in UTC, adjust if using a different timezone
                 time_diff = now - created_at
+                # If the ticket is older than an hour check to see if they are on the NG
                 if time_diff >= timedelta(minutes=60):
                     print(f"Adding user {github_username} to Copilot")
                     add_user_to_team(github_username, token)
@@ -46,6 +48,13 @@ def main():
                                     "For OpenLab users please follow the standard steps here https://docs.github.com/en/copilot/using-github-copilot/getting-code-suggestions-in-your-ide-with-github-copilot", 
                                     token)
                     close_issue(issue['number'], token)
+                # If the ticket is older than 24 hours asign admins to ticket
+                elif time_diff >= timedelta(hours=24):
+                    print(f"Assigning admins to issue {issue['number']}")
+                    comment_on_issue(issue['number'], 
+                                    github_username + " we have not seen + " + netapp_username + " in the NG directory yet, the admins will reach out to you shortly.",token)
+                    assign_users_to_issue(issue['number'], owners, token)
+                    
             else:
                 print(f"NetApp username {netapp_username} not found in NG directory")
     else:
@@ -99,6 +108,28 @@ def close_issue(issue_number, token):
     print(response)
     print(response.json())
     return response.status_code == 200
+
+def assign_users_to_issue(issue_number, assignees, token):
+    """
+    Assigns users to a GitHub issue.
+
+    Parameters:
+    - issue_number: The number of the issue to assign users to.
+    - assignees: A list of GitHub usernames to assign to the issue.
+    - token: GitHub API token for authentication.
+    """
+    url = f"https://api.github.com/repos/Netapp-Copilot/new-user/issues/{issue_number}/assignees"
+    headers = {
+        "Authorization": f"token {token}",
+        "Accept": "application/vnd.github.v3+json"
+    }
+    data = {"assignees": assignees}
+    response = requests.post(url, json=data, headers=headers)
+
+    if response.status_code == 201:
+        print(f"Successfully assigned {', '.join(assignees)} to issue #{issue_number}")
+    else:
+        print(f"Failed to assign users to issue #{issue_number}. Status code: {response.status_code}")
 
 def get_ng_users():
     response = requests.get('http://onestop.netapp.com/dir/api/ng/ng-github-users',
