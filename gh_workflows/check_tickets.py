@@ -38,9 +38,11 @@ def main():
                 if time_diff >= timedelta(minutes=60):
                     print(f"Adding user {github_username} to Copilot")
                     add_user_to_team(github_username, token)
-                    comment_on_issue(issue['number'], f"User {github_username} has been added to Copilot.\n 
-                                     For SecLab/BigTop users there are special step on the confluence page that need to be followed to complete the set up https://confluence.ngage.netapp.com/display/NGAGE/Copilot \n 
-                                     For OpenLab users please follow the standard steps here https://docs.github.com/en/copilot/using-github-copilot/getting-code-suggestions-in-your-ide-with-github-copilot", token)
+                    comment_on_issue(issue['number'], 
+                                    "User " + github_username + " has been added to Copilot.\n"
+                                    "For SecLab/BigTop users there are special steps on the confluence page that need to be followed to complete the setup https://confluence.ngage.netapp.com/display/NGAGE/Copilot\n"
+                                    "For OpenLab users please follow the standard steps here https://docs.github.com/en/copilot/using-github-copilot/getting-code-suggestions-in-your-ide-with-github-copilot", 
+                                    token)
                     close_issue(issue['number'], token)
     else:
         print(f"Failed to retrieve issues. Status code: {response.status_code}")
