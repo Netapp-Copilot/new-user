@@ -123,6 +123,8 @@ jobs:
       - name: User already in active group
         if: steps.check_membership.outcome == 'success' && steps.check_netapp_user.outcome == 'success' && steps.check_active_group.outcome == 'success'
         uses: octokit/request-action@v2.x
+        env:
+          GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}
         with:
           route: POST /repos/{repo}/issues/{issue_number}/comments
           repo: ${{ github.repository }}
