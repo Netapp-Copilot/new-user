@@ -6,6 +6,7 @@ def main():
     options = parse_args()
     results = query_enterprise('consumed-licenses', options.token)
     for each in results:
+        print(results)
         for user in each['users']:
             if user['github_com_login'] == options.github:
                 print(f"User {options.username} is consuming a license")
