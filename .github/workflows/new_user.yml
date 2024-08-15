@@ -39,10 +39,25 @@ jobs:
             Hi @${{ github.actor }}, welcome to Copilot!!!
 
             As a new user, please make sure your NetApp Email address <username>@netapp.com is listed as one of your emails here. https://github.com/settings/emails. If not, you will receive an SSO error when logging in to join the org.
-
-            In about an hour you will receive an email from GitHub with an invite to the Netapp-copilot org. The email address will be from noreply@github.com You must accept the invite to get access to Copilot. The email may be in your junk mail folder.
         env:
           GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}
+
+      - name: Add users to NG
+        if: steps.check_membership.outcome == 'failure' && steps.check_netapp_user.outcome == 'failure'
+        env:
+          GH_PAT: "${{ secrets.ADMIN_GITHUB_TOKEN }}"
+        run: |
+          python gh_workflows/add_to_ng.py --token "$ADMIN_GITHUB_TOKEN" --username "${{ github.event.issue.user.login }}"
+
+      - name: tell user they have been added to NG
+        if: steps.check_membership.outcome == 'failure' && steps.check_netapp_user.outcome == 'failure'
+        uses: octokit/request-action@v2.x
+        with:
+          route: POST /repos/{repo}/issues/{issue_number}/comments
+          repo: ${{ github.repository }}
+          issue_number: ${{ github.event.issue.number }}
+          body: >
+            Hi @${{ github.actor }}, You have been added to ng-github-user, In about an hour you will receive an email from GitHub with an invite to the Netapp-copilot org. The email address will be from noreply@github.com You must accept the invite to get access to Copilot. The email may be in your junk mail folder. Once Accepted you will have access to Copilot.
 
       - name: Check if User is in Active Group
         if: steps.check_membership.outcome == 'success' && steps.check_netapp_user.outcome == 'success'

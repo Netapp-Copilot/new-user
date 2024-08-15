@@ -2,14 +2,22 @@ import requests
 import urllib.parse
 import json
 import os
+import argparse
 
 def main():
+    options = parse_args()
     # Initial parameters
     tenant_id = os.getenv("TENANT_ID")
     client_id = os.getenv("CLIENT_ID")
     client_secret = os.getenv("CLIENT_SECRET")
     scope = os.getenv("SCOPE")
     oauth_data = get_oauth_token(tenant_id, client_id, client_secret, scope)
+    add_user_to_nag(oauth_data, options.username)
+
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--Netapp', dest='username', help="Netapp useranme")
+    return parser.parse_args()
 
 def get_nag_users(oauth_data):
     headers = {
@@ -30,13 +38,13 @@ def get_nag_users(oauth_data):
     with open('ng_github_users.json', 'w') as f:
         f.write(result_response.text)
 
-def add_user_to_nag(oauth_data, body):
+def add_user_to_nag(oauth_data, username):
     headers = {
         'Authorization': f"{oauth_data['token_type']} {oauth_data['access_token']}",
         'Content-Type': "application/json"
     }
     body = {
-        'Roles':[{'Name': 'csharpe', 'IsMember': 'yes'}]
+        'Roles':[{'Name': username, 'IsMember': 'yes'}]
     }
     function_url_put = "https://nagapi.netapp.com//api/nag/ng-github-admins" + "?impersonateuser=githubna@netapp.com"
     result_response = requests.put(function_url_put, headers=headers, data=json.dumps(body))
