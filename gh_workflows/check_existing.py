@@ -5,6 +5,7 @@ import sys
 def main():
     options = parse_args()
     results = query_enterprise('consumed-licenses', options.token)
+    print(f"Checking if user {options.username} is consuming a license")
     for each in results:
         for user in each['users']:
             if user['github_com_login'] == options.github:
