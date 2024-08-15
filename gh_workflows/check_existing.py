@@ -6,7 +6,6 @@ def main():
     options = parse_args()
     results = query_enterprise('consumed-licenses', options.token)
     for each in results:
-        print(results)
         for user in each['users']:
             if user['github_com_login'] == options.github:
                 print(f"User {options.username} is consuming a license")
@@ -31,7 +30,6 @@ def query_enterprise(api, token, give_params=None, additional_headers=None):
     params = {"per_page": "100"}
     response = _make_request(query_url, headers, params)
     data = [response.json()]
-    print(data)
     while 'next' in response.links:
         response = _make_request(response.links['next']['url'], headers)
         data.append(response.json())
