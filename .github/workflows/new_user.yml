@@ -44,5 +44,63 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}
 
-      # TODO: Add user to NG
+      - name: Check if User is in Active Group
+        if: steps.check_membership.outcome == 'success' && steps.check_netapp_user.outcome == 'success'
+        id: check_active_group
+        uses: octokit/request-action@v2.x
+        with:
+          route: GET /orgs/{org}/teams/{team_slug}/memberships/{username}
+          org: Netapp-Copilot  # Replace with your GitHub organization
+          team_slug: active-users  # The slug of the team
+          username: ${{ github.actor }}  # The username to check
+        env:
+          GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}
+        continue-on-error: true
+
+      - name: Existing Users
+        if: steps.check_membership.outcome == 'success' && steps.check_netapp_user.outcome == 'success' && steps.check_active_group.outcome == 'failure'
+        uses: octokit/request-action@v2.x
+        with:
+          route: POST /repos/{repo}/issues/{issue_number}/comments
+          repo: ${{ github.repository }}
+          issue_number: ${{ github.event.issue.number }}
+          body: >
+            Hi @${{ github.actor }}, welcome back to Copilot!!!
+
+        env:
+          GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}
+
+      - name: Add User back to active group
+        if: steps.check_membership.outcome == 'failure' && steps.check_netapp_user.outcome == 'success' && steps.check_active_group.outcome == 'failure'
+        uses: octokit/request-action@v2.x
+        with:
+          route: PUT /orgs/{org}/teams/{team_slug}/memberships/{username}
+          org: Netapp-Copilot  # Replace with your GitHub organization
+          team_slug: active-users  # The slug of the team
+          username: ${{ github.actor }}  # The username to add
+        env:
+          GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}
+      
+      - name: Let user know they are added back to active group
+        if: steps.check_membership.outcome == 'success' && steps.check_netapp_user.outcome == 'success' && steps.check_active_group.outcome == 'failure'
+        uses: octokit/request-action@v2.x
+        with:
+          route: POST /repos/{repo}/issues/{issue_number}/comments
+          repo: ${{ github.repository }}
+          issue_number: ${{ github.event.issue.number }}
+          body: >
+            @${{ github.actor }}, Your account has been reactivated. You should now have access to Copilot.
+
+      - name: Close the issue
+        if: steps.check_membership.outcome == 'success' && steps.check_netapp_user.outcome == 'success' && steps.check_active_group.outcome == 'failure'
+        uses: octokit/request-action@v2.x
+        with:
+          route: PATCH /repos/{repo}/issues/{issue_number}
+          repo: ${{ github.repository }}
+          issue_number: ${{ github.event.issue.number }}
+          state: closed
+        env:
+          GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}
+
+      
       
