@@ -130,7 +130,7 @@ jobs:
           repo: ${{ github.repository }}
           issue_number: ${{ github.event.issue.number }}
           body: >
-            @${{ github.actor }}, You Already have access to Copilot. If your having issues or hitting an error please email ng-github-admins@netapp.com and let us know what the issue is.
+            Hey @${{ github.actor }}, You Already have access to Copilot. If your having issues or hitting an error please email ng-github-admins@netapp.com and let us know what the issue is.
 
       - name: Close the issue
         if: steps.check_membership.outcome == 'success' && steps.check_netapp_user.outcome == 'success' && steps.check_active_group.outcome == 'success'
