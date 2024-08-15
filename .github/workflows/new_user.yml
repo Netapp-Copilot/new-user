@@ -8,6 +8,9 @@ jobs:
   print_username:
     runs-on: ubuntu-latest
     steps:
+      
+      - name: Check out code
+        uses: actions/checkout@v2
 
       - name: Check if user is a member of the organization
         id: check_membership
