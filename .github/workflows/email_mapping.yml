@@ -1,0 +1,28 @@
+name: Github username to Netapp Email mappings
+
+on:
+  schedule:
+    - cron: '30 3 * * * '
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: self-hosted
+
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+
+    - name: Run Python script
+      run: python gh_workflows/emails.py
+      env:
+        GH_AUDIT: ${{ secrets.GH_AUDIT }}
+
+    - name: Notify Slack
+      if: failure()  # This step will only run if the previous step fails
+      uses: ravsamhq/notify-slack-action@2.3.0
+      with:
+        status: ${{ job.status }}
+        fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}  # Set this in your repo's secrets
