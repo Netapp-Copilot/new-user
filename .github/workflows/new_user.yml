@@ -26,7 +26,7 @@ jobs:
       - name: Check if user exist in Netapp Enterpise
         id: check_netapp_user
         env:
-          GH_PAT: "${{ secrets.ADMIN_AUDIT }}"
+          ADMIN_AUDIT: "${{ secrets.ADMIN_AUDIT }}"
         run: |
           python gh_workflows/check_existing.py --token "$ADMIN_AUDIT" --username "${{ github.event.issue.user.login }}"
         continue-on-error: true
