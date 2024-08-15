@@ -8,15 +8,15 @@ body:
   attributes:
     value: >
       Getting access to Copilot is easy! Just fill out the form below and we'll get you set up in no time. 
-      Please fill in your username below, read over the GenAI Preliminary Guidance, and submit your request with the green button at the bottom of the page.
+      Please fill in your username below, read over the GenAI Guidance, and submit your request with the green button at the bottom of the page.
 
 
 - type: input
   attributes:
     label: Netapp Username 
     description: >
-      What is your NetApp username? Make sure to use your NetApp username and not your github username
-    placeholder: hitz
+      What is your NetApp username? Make sure to use your NetApp unix username (carchi) and not your github username or Netapp Email address.
+    placeholder: carchi
   validations:
     required: true
 
@@ -25,7 +25,9 @@ body:
     value: >
       # Where can I use Copilot for NetApp development?
       
-      Github Co-pilot users must follow the rules for GenAI outlined in legal's [GenAI Preliminary Guidance](https://netapp.sharepoint.com/:w:/r/sites/LegalCentral/_layouts/15/Doc.aspx?sourcedoc=%7B953E5610-67F6-4AFC-AF5F-9C27D20EA37A%7D&file=GenAI%20Preliminary%20Guidance.docx&action=default&mobileredirect=true).
+      Github Co-pilot users must follow the rules for GenAI outlined in legal's [GenAI Guidance](https://netapp.sharepoint.com/:w:/r/sites/LegalCentral/_layouts/15/Doc.aspx?sourcedoc=%7B953E5610-67F6-4AFC-AF5F-9C27D20EA37A%7D&file=GenAI%20Preliminary%20Guidance.docx&action=default&mobileredirect=true).
+
+      [Additional product-based acceptable use-cases:](https://confluence.ngage.netapp.com/display/TPP/Acceptable+GenAI+Use+Cases+for+product+code)
       
       Always check the doc to see if it has become more permissive, but as of 3/5/24, the guidance is:
       
