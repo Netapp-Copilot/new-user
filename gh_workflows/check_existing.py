@@ -25,7 +25,7 @@ def parse_args():
 
 def query_enterprise(api, token, give_params=None, additional_headers=None):
     query_url = f"https://api.github.com/enterprises/netapp/{api}"
-    headers = {'Authorization': f'token {token}'}
+    headers = {'Authorization': f'token {token.strip()}'}
     if additional_headers:
         headers.update(additional_headers)
     params = {"per_page": "100"}
