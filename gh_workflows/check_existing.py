@@ -8,7 +8,7 @@ def main():
     print(f"Checking if user {options.username} is consuming a license")
     for each in results:
         for user in each['users']:
-            if user['github_com_login'] == options.github:
+            if user['github_com_login'] == options.username:
                 print(f"User {options.username} is consuming a license")
                 sys.exit(0)
     else:
