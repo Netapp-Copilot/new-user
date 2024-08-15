@@ -20,8 +20,16 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}
         continue-on-error: true
 
+      - name: Check if user exist in Netapp Enterpise
+        id: check_netapp_user
+        env:
+          GH_PAT: "${{ secrets.ADMIN_GITHUB_TOKEN }}"
+        run: |
+          python gh_workflows/check_existing.py --token "$ADMIN_GITHUB_TOKEN" --username "${{ github.event.issue.user.login }}"
+        continue-on-error: true
+
       - name: New Users
-        if: steps.check_membership.outcome == 'failure'
+        if: steps.check_membership.outcome == 'failure' && steps.check_netapp_user.outcome == 'failure'
         uses: octokit/request-action@v2.x
         with:
           route: POST /repos/{repo}/issues/{issue_number}/comments

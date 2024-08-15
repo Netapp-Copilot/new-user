@@ -8,17 +8,16 @@ def main():
     for each in results:
         for user in each['users']:
             if user['github_com_login'] == options.github:
-                print(f"User {options.github} is consuming a license")
+                print(f"User {options.username} is consuming a license")
                 sys.exit(0)
     else:
-        print(f"User {options.github} is not consuming a license")
+        print(f"User {options.username} is not consuming a license")
         sys.exit(1)
 
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--user', dest='user', help="NetApp username")
-    parser.add_argument('--github', dest='github', help="GitHub useranme")
+    parser.add_argument('--username', dest='username', help="GitHub useranme")
     parser.add_argument('--token', dest='token', help="GitHub token")
     return parser.parse_args()
 
