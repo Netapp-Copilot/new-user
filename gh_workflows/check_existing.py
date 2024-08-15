@@ -31,6 +31,7 @@ def query_enterprise(api, token, give_params=None, additional_headers=None):
     params = {"per_page": "100"}
     response = _make_request(query_url, headers, params)
     data = [response.json()]
+    print(data)
     while 'next' in response.links:
         response = _make_request(response.links['next']['url'], headers)
         data.append(response.json())
