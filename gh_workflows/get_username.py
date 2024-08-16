@@ -8,7 +8,7 @@ info_pattern = re.compile(r'### Netapp Username\s*\n\s*(\S+)')
 
 
 def main():
-    token = os.getenv("ADMIN_GITHUB_TOKEN")
+    token = os.getenv("ADMIN_AUDIT")
     token = token.strip()
 
     options = parse_args()
