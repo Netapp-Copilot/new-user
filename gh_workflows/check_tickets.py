@@ -41,7 +41,8 @@ def main():
                 # If the ticket is older than an hour check to see if they are on the NG
                 if time_diff >= timedelta(minutes=60):
                     print(f"Adding user {github_username} to Copilot")
-                    invite_user_to_org_and_add_to_team(github_username, token)
+                    id = get_user_id(github_username, token)
+                    invite_user_to_org_and_add_to_team(id, token)
                     comment_on_issue(issue['number'], 
                                     "User " + github_username + " has been added to Copilot.\n"
                                     "For SecLab/BigTop users there are special steps on the confluence page that need to be followed to complete the setup https://confluence.ngage.netapp.com/display/NGAGE/Copilot\n"
@@ -83,9 +84,9 @@ def add_user_to_team(username, token):
     print(response)
     return response.status_code == 200
 
-def invite_user_to_org_and_add_to_team(username, token):
+def invite_user_to_org_and_add_to_team(user_id, token):
     """Invite a user to the GitHub organization and add them to the active-users team."""
-    print(f"Inviting user {username} to the GitHub organization and adding to active-users team")
+    print(f"Inviting user {user_id} to the GitHub organization and adding to active-users team")
 
     # Invite user to the organization
     invite_url = f'https://api.github.com/orgs/Netapp-Copilot/invitations'
@@ -94,7 +95,7 @@ def invite_user_to_org_and_add_to_team(username, token):
         'Accept': 'application/vnd.github.v3+json',
     }
     invite_data = {
-        'email': username,
+        'invitee_id': user_id,
         'role': 'direct_member',
         'team_ids': [8276605]
     }
@@ -102,6 +103,23 @@ def invite_user_to_org_and_add_to_team(username, token):
     print(invite_data)
     print(invite_response)
     print(invite_response.json())
+
+def get_user_id(username, token):
+    """Get the GitHub user ID for a given username."""
+    url = f'https://api.github.com/users/{username}'
+    headers = {
+        'Authorization': f'token {token}',
+        'Accept': 'application/vnd.github.v3+json',
+    }
+    response = requests.get(url, headers=headers)
+    
+    if response.status_code == 200:
+        user_data = response.json()
+        return user_data['id']
+    else:
+        print(f"Failed to retrieve user ID. Status code: {response.status_code}")
+        print(response.json())
+        return None
 
 def comment_on_issue(issue_number, comment, token):
     """Post a comment on an issue."""
