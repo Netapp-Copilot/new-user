@@ -54,7 +54,7 @@ jobs:
         env:
           ADMIN_AUDIT: "${{ secrets.ADMIN_AUDIT }}"
         run: |
-                username=$(python gh_workflows/get_username.py --token "$ADMIN_AUDIT" --issue_number "${{ github.event.issue.number }}")
+                username=$(python gh_workflows/get_username.py --issue_number "${{ github.event.issue.number }}")
                 echo "::set-output name=netapp_username::$username"
         continue-on-error: true
 
