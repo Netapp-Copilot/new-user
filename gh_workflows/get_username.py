@@ -45,7 +45,7 @@ def get_issue_body(token, issue_number):
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parse_args.add_argument('--issue_number', dest='issue_number', help="GitHub useranme")
+    parser.add_argument('--issue_number', dest='issue_number', help="GitHub useranme")
     return parser.parse_args()
 
 
