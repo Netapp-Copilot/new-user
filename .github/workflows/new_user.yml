@@ -60,6 +60,11 @@ jobs:
 
       - name: Add users to NG
         if: steps.check_membership.outcome == 'failure' && steps.check_netapp_user.outcome == 'failure'
+        env:
+          TENANT_ID: "${{ secrets.TENANT_ID }}"
+          CLIENT_ID: "${{ secrets.CLIENT_ID }}"
+          SCOPE: "${{ secrets.SCOPE }}"
+          CLIENT_SECRET: "${{ secrets.CLIENT_SECRET }}"
         run: |
           python gh_workflows/add_to_ng.py --username "${{ steps.get_netapp_username.outputs.netapp_username }}"
 
