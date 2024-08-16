@@ -99,6 +99,7 @@ def invite_user_to_org_and_add_to_team(username, token):
         'team_ids': [8276605]
     }
     invite_response = requests.post(invite_url, headers=invite_headers, json=invite_data)
+    print(invite_data)
     print(invite_response)
     print(invite_response.json())
 
