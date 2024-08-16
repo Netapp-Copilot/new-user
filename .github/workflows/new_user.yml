@@ -71,6 +71,8 @@ jobs:
       - name: tell user they have been added to NG
         if: steps.check_membership.outcome == 'failure' && steps.check_netapp_user.outcome == 'failure'
         uses: octokit/request-action@v2.x
+        env:
+          GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}
         with:
           route: POST /repos/{repo}/issues/{issue_number}/comments
           repo: ${{ github.repository }}
