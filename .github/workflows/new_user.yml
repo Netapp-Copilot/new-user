@@ -90,7 +90,7 @@ jobs:
         with:
           route: GET /orgs/{org}/teams/{team_slug}/memberships/{username}
           org: Netapp-Copilot  # Replace with your GitHub organization
-          team_slug: active-users  # The slug of the team
+          team_slug: 8276605  # The slug of the team
           username: ${{ github.actor }}  # The username to check
         env:
           GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}
@@ -105,7 +105,6 @@ jobs:
           issue_number: ${{ github.event.issue.number }}
           body: >
             Hi @${{ github.actor }}, welcome back to Copilot!!!
-
         env:
           GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}
 
@@ -129,6 +128,8 @@ jobs:
           issue_number: ${{ github.event.issue.number }}
           body: >
             @${{ github.actor }}, Your account has been reactivated. You should now have access to Copilot.
+        env:
+          GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}
 
       - name: Close the issue
         if: steps.check_membership.outcome == 'success' && steps.check_netapp_user.outcome == 'success' && steps.check_active_group.outcome == 'failure'
