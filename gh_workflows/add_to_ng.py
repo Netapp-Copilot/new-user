@@ -16,7 +16,7 @@ def main():
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--Netapp', dest='username', help="Netapp useranme")
+    parser.add_argument('--username', dest='username', help="Netapp useranme")
     return parser.parse_args()
 
 def get_nag_users(oauth_data):
