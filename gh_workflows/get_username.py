@@ -10,7 +10,6 @@ info_pattern = re.compile(r'### Netapp Username\s*\n\s*(\S+)')
 def main():
     options = parse_args()
     token = os.getenv("ADMIN_AUDIT")
-    print(token)
     token = token.strip()
 
     issue_number = options.issue_number
