@@ -60,10 +60,8 @@ jobs:
 
       - name: Add users to NG
         if: steps.check_membership.outcome == 'failure' && steps.check_netapp_user.outcome == 'failure'
-        env:
-          GH_PAT: "${{ secrets.ADMIN_GITHUB_TOKEN }}"
         run: |
-          python gh_workflows/add_to_ng.py --token "$ADMIN_GITHUB_TOKEN" --username "${{ steps.get_netapp_username.outputs.netapp_username }}"
+          python gh_workflows/add_to_ng.py --username "${{ steps.get_netapp_username.outputs.netapp_username }}"
 
       - name: tell user they have been added to NG
         if: steps.check_membership.outcome == 'failure' && steps.check_netapp_user.outcome == 'failure'
