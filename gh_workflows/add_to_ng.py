@@ -25,7 +25,7 @@ def get_nag_users(oauth_data):
         'Content-Type': "application/json"
     }
     # Make the API request
-    function_url = "https://nagapi.netapp.com/api/nag/ng-github-admins" + "?impersonateuser=githubna@netapp.com&loadtype=2"
+    function_url = "https://nagapi.netapp.com/api/nag/ng-github-users" + "?impersonateuser=githubna@netapp.com&loadtype=2"
     result_response = requests.get(function_url, headers=headers)
     # Print out the response text before parsing it
     print("API response:")
