@@ -46,7 +46,7 @@ def add_user_to_nag(oauth_data, username):
     body = {
         'Roles':[{'Name': username, 'IsMember': 'yes'}]
     }
-    function_url_put = "https://nagapi.netapp.com//api/nag/ng-github-admins" + "?impersonateuser=githubna@netapp.com"
+    function_url_put = "https://nagapi.netapp.com//api/nag/ng-github-users" + "?impersonateuser=githubna@netapp.com"
     result_response = requests.put(function_url_put, headers=headers, data=json.dumps(body))
     # Print out the response text before parsing it
     print("API PUT response:")
