@@ -31,6 +31,27 @@ jobs:
           python gh_workflows/check_existing.py --token "$ADMIN_AUDIT" --username "${{ github.event.issue.user.login }}"
         continue-on-error: true
 
+
+      - name: Get Netapp Username
+        id: get_netapp_username  # Add an ID to reference this step
+        env:
+          ADMIN_AUDIT: "${{ secrets.ADMIN_AUDIT }}"
+        run: |
+                username=$(python gh_workflows/get_username.py --issue_number "${{ github.event.issue.number }}")
+                echo "::set-output name=netapp_username::$username"
+        continue-on-error: true
+
+      - name: Check usernames
+        if: steps.get_netapp_username.outputs.netapp_username == github.event.issue.user.login
+        uses: octokit/request-action@v2.x
+        with:
+          route: POST /repos/{repo}/issues/{issue_number}/comments
+          repo: ${{ github.repository }}
+          issue_number: ${{ github.event.issue.number }}
+          body: >
+            Hi @${{ github.actor }}, Your Netapp Username, and Github Username appear to match. Please double check that you entered your Netapp Username. If you entered the wrong username, please close this issue and open a new one with the correct username.
+        env:
+          GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}
       # New user logic (These are user who are not in the org and not part of the enterpise so do not have a Netapp email address). They need to be added to the NG (which takes an hour  to sync) and then added to the org.
       # a section action (check_user) will continue their request to be added to the org.
 
@@ -47,16 +68,6 @@ jobs:
             As a new user, please make sure your NetApp Email address <username>@netapp.com is listed as one of your emails here. https://github.com/settings/emails. If not, you will receive an SSO error when logging in to join the org.
         env:
           GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}
-
-      - name: Get Netapp Username
-        if: steps.check_membership.outcome == 'failure' && steps.check_netapp_user.outcome == 'failure'
-        id: get_netapp_username  # Add an ID to reference this step
-        env:
-          ADMIN_AUDIT: "${{ secrets.ADMIN_AUDIT }}"
-        run: |
-                username=$(python gh_workflows/get_username.py --issue_number "${{ github.event.issue.number }}")
-                echo "::set-output name=netapp_username::$username"
-        continue-on-error: true
 
       - name: Add users to NG
         if: steps.check_membership.outcome == 'failure' && steps.check_netapp_user.outcome == 'failure'
