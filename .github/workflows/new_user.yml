@@ -68,6 +68,10 @@ jobs:
             Hi @${{ github.actor }}, Your Netapp Username, and Github Username appear to match. Please double check that you entered your Netapp Username. If you entered the wrong username, please close this issue and open a new one with the correct username.
         env:
           GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}
+
+      - name: Exit if usernames match
+        if: steps.get_netapp_username.outputs.netapp_username == github.event.issue.user.login
+        run: exit 1
       # New user logic (These are user who are not in the org and not part of the enterpise so do not have a Netapp email address). They need to be added to the NG (which takes an hour  to sync) and then added to the org.
       # a section action (check_user) will continue their request to be added to the org.
 
