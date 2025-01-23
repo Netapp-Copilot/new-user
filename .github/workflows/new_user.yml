@@ -28,7 +28,7 @@ jobs:
         env:
           ADMIN_AUDIT: "${{ secrets.ADMIN_AUDIT }}"
         run: |
-          python gh_workflows/check_existing.py --token "$ADMIN_AUDIT" --username "${{ github.event.issue.user.login }}"
+          python3 gh_workflows/check_existing.py --token "$ADMIN_AUDIT" --username "${{ github.event.issue.user.login }}"
         continue-on-error: true
 
 
@@ -37,7 +37,7 @@ jobs:
         env:
           ADMIN_AUDIT: "${{ secrets.ADMIN_AUDIT }}"
         run: |
-                username=$(python gh_workflows/get_username.py --issue_number "${{ github.event.issue.number }}")
+                username=$(python3 gh_workflows/get_username.py --issue_number "${{ github.event.issue.number }}")
                 echo "::set-output name=netapp_username::$username"
         continue-on-error: true
 
@@ -97,7 +97,7 @@ jobs:
           SCOPE: "${{ secrets.SCOPE }}"
           CLIENT_SECRET: "${{ secrets.CLIENT_SECRET }}"
         run: |
-          python gh_workflows/add_to_ng.py --username "${{ steps.get_netapp_username.outputs.netapp_username }}"
+          python3 gh_workflows/add_to_ng.py --username "${{ steps.get_netapp_username.outputs.netapp_username }}"
 
       - name: tell user they have been added to NG
         if: steps.check_membership.outcome == 'failure' && steps.check_netapp_user.outcome == 'failure'
