@@ -23,28 +23,27 @@ body:
 - type: markdown
   attributes:
     value: >
-      # Where can I use Copilot for NetApp development?
-      
-      Github Co-pilot users must follow the rules for GenAI outlined in legal's [GenAI Guidance](https://netapp.sharepoint.com/:w:/r/sites/LegalCentral/_layouts/15/Doc.aspx?sourcedoc=%7B953E5610-67F6-4AFC-AF5F-9C27D20EA37A%7D&file=GenAI%20Preliminary%20Guidance.docx&action=default&mobileredirect=true).
+      # Set Up
+      Please review the setup instruction [here on confluence](https://confluence.ngage.netapp.com/display/NGAGE/Copilot)
 
-      [Additional product-based acceptable use-cases:](https://confluence.ngage.netapp.com/display/TPP/Acceptable+GenAI+Use+Cases+for+product+code)
-      
-      Always check the doc to see if it has become more permissive, but as of 3/5/24, the guidance is:
-      
-      ## For internal infrastructure and services in NetApp engineering:
-      
-      You may use approved secure sandboxes designated for internal infrastructure and services purposes for any use case.
-      
-      ## For product development (all other):
-      
-      You may use approved secure sandboxes designated for product development purposes for the following internal use cases:
-      
-      - Knowledge search/chat (no copying of output permitted)
-      
-      - Unit testing, test automation and test infrastructure (such test code must not be distributed as part of any source or binary code of any product/service). Test code may be checked in to the same repository as product code. Test code may be distributed but must be independent of the product.
-      
-      - Code comments that are only visible inside of NetApp may be added directly to product source files, provided the comments do not ship to customers (for example, if the comments are compiled out as part of creating the product.).
-      
+      # Where Can I Use Copilot for NetApp Development?
+
+      GitHub Copilot users must adhere to the guidelines for Generative AI outlined in the legal department's [GenAI Guidance](https://netapp.sharepoint.com/:w:/r/sites/LegalCentral/_layouts/15/Doc.aspx?sourcedoc=%7B953E5610-67F6-4AFC-AF5F-9C27D20EA37A%7D&file=GenAI%20Preliminary%20Guidance.docx&action=default&mobileredirect=true).
+
+      For more product-specific acceptable use cases, refer to the following link: [Additional product-based acceptable use cases:](https://confluence.ngage.netapp.com/display/TPP/Acceptable+GenAI+Use+Cases+for+product+code).
+
+      Always check the documentation for updates, as it may become more permissive over time. As of March 5, 2024, the guidance is as follows:
+
+      ## For Internal Infrastructure and Services in NetApp Engineering:
+
+      You may use approved secure sandboxes designated for internal infrastructure and services for any use case.
+
+      ## For Product Development (All Other Cases):
+
+      You may use approved secure sandboxes intended for product development for the following internal use cases:
+
+      - Knowledge search/chat (note: copying of output is not permitted).
+      - Unit testing, test automation, and test infrastructure (please ensure that this test code is not distributed as part of any source or binary code for any product or service). Test code may be checked into the same repository as the product code. While test code can be distributed, it must remain independent of the product.
+      - Code comments that are visible only within NetApp may be added directly to product source files, as long as these comments do not ship to customers (for example, comments can be compiled out during the product creation process).
       - Log and failure analyses.
-      
       - Bug identification.
