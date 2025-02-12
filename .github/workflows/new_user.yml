@@ -23,7 +23,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.ADMIN_AUDIT }}
         continue-on-error: true
 
-      - name: Check if user exist in Netapp Enterpise
+      - name: Check if user exist in Netapp Enterprise
         id: check_netapp_user
         env:
           ADMIN_AUDIT: "${{ secrets.ADMIN_AUDIT }}"
@@ -73,7 +73,7 @@ jobs:
       - name: Exit if usernames match
         if: steps.get_netapp_username.outputs.netapp_username == github.event.issue.user.login
         run: exit 1
-      # New user logic (These are user who are not in the org and not part of the enterpise so do not have a Netapp email address). They need to be added to the NG (which takes an hour  to sync) and then added to the org.
+      # New user logic (These are user who are not in the org and not part of the Enterprise so do not have a Netapp email address). They need to be added to the NG (which takes an hour  to sync) and then added to the org.
       # a section action (check_user) will continue their request to be added to the org.
 
       - name: New Users
@@ -86,7 +86,7 @@ jobs:
           body: >
             Hi @${{ github.actor }}, welcome to Copilot!!!
 
-            As a new user, please ensure your NetApp email address <username>@netapp.com is listed among your emails here: https://github.com/settings/emails. If it is not, you will encounter an SSO error when logging in.
+            As a new user, please ensure that your NetApp email address <username>@netapp.com is listed among your emails here: https://github.com/settings/emails. If it is not, you will encounter an SSO error when logging in.
         env:
           GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}
 
