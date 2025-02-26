@@ -24,7 +24,11 @@ def main():
     if response.status_code == 200:
         issues = response.json()
         for issue in issues:
-            netapp_username = get_netapp_username(issue)
+            try:
+                netapp_username = get_netapp_username(issue)
+            except:
+                print(f"Failed to retrieve NetApp Username from issue: [{issue['title']}]({issue['html_url']})")
+                continue
             github_username = issue['user']['login']
             print(github_username)
             if not netapp_username:
