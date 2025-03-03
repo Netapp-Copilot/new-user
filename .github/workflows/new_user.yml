@@ -85,8 +85,7 @@ jobs:
           issue_number: ${{ github.event.issue.number }}
           body: >
             Hi @${{ github.actor }}, welcome to Copilot!!!
-
-            As a new user, please ensure that your NetApp email address <username>@netapp.com is listed among your emails here: https://github.com/settings/emails. If it is not, you will encounter an SSO error when logging in.
+            As a new user, please ensure that your NetApp email address username@netapp.com is listed among your emails here. github.com/settings/emails. If it is not, you will encounter an SSO error when logging in.
         env:
           GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}
 
