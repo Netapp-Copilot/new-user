@@ -39,7 +39,6 @@ jobs:
         run: |
                 username=$(python3 gh_workflows/get_username.py --issue_number "${{ github.event.issue.number }}")
                 echo "::set-output name=netapp_username::$username"
-        continue-on-error: true
 
       - name: Add label based on membership status
         if: steps.check_membership.outcome == 'failure'
@@ -57,22 +56,23 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Check usernames
-        if: steps.get_netapp_username.outputs.netapp_username == github.event.issue.user.login
-        uses: octokit/request-action@v2.x
-        with:
-          route: POST /repos/{repo}/issues/{issue_number}/comments
-          repo: ${{ github.repository }}
-          issue_number: ${{ github.event.issue.number }}
-          body: |
-            Hi @${{ github.actor }}, it appears that your NetApp username and GitHub username are the same. Please double-check that you’ve entered your NetApp username correctly. If you find that you entered the wrong username, kindly close this issue and open a new one with the correct username.
-            If both usernames are indeed the same, please reach out to ng-github-users for assistance.
-        env:
-          GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}
+      # - name: Check usernames
+      #   if: steps.get_netapp_username.outputs.netapp_username == github.event.issue.user.login
+      #   uses: octokit/request-action@v2.x
+      #   with:
+      #     route: POST /repos/{repo}/issues/{issue_number}/comments
+      #     repo: ${{ github.repository }}
+      #     issue_number: ${{ github.event.issue.number }}
+      #     body: |
+      #       Hi @${{ github.actor }}, it appears that your NetApp username and GitHub username are the same. Please double-check that you’ve entered your NetApp username correctly. If you find that you entered the wrong username, kindly close this issue and open a new one with the correct username.
+      #       If both usernames are indeed the same, please reach out to ng-github-users for assistance.
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}
 
-      - name: Exit if usernames match
-        if: steps.get_netapp_username.outputs.netapp_username == github.event.issue.user.login
-        run: exit 1
+      # - name: Exit if usernames match
+      #   if: steps.get_netapp_username.outputs.netapp_username == github.event.issue.user.login
+      #   run: exit 1
+
       # New user logic (These are user who are not in the org and not part of the Enterprise so do not have a Netapp email address). They need to be added to the NG (which takes an hour  to sync) and then added to the org.
       # a section action (check_user) will continue their request to be added to the org.
 
