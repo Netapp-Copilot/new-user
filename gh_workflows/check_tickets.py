@@ -17,6 +17,7 @@ def main():
     # Make a GET request to the GitHub API
     headers = {'Authorization': f'token {token}'}
     response = requests.get(url, headers=headers)
+    print(response)
 
     ng_usernames = get_ng_users()
 
