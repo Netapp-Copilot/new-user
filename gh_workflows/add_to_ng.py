@@ -39,6 +39,7 @@ def get_nag_users(oauth_data):
         f.write(result_response.text)
 
 def add_user_to_nag(oauth_data, username):
+    import sys
     headers = {
         'Authorization': f"{oauth_data['token_type']} {oauth_data['access_token']}",
         'Content-Type': "application/json"
@@ -48,13 +49,26 @@ def add_user_to_nag(oauth_data, username):
     }
     function_url_put = "https://nagapi.netapp.com//api/nag/ng-github-users" + "?impersonateuser=githubna@netapp.com"
     result_response = requests.put(function_url_put, headers=headers, data=json.dumps(body))
-    # Print out the response text before parsing it
     print("API PUT response:")
     print(result_response.text)
 
-    # Parse the JSON response and print the result
-    result_data = result_response.json()
-    print(result_data)
+    if not result_response.ok:
+        print(f"[ERROR] HTTP {result_response.status_code}: {result_response.reason}")
+        try:
+            error_data = result_response.json()
+            print("[ERROR] API Error Message:", error_data.get('Message', 'No message'))
+            print("[ERROR] ExceptionMessage:", error_data.get('ExceptionMessage', 'No details'))
+            print("[ERROR] ExceptionType:", error_data.get('ExceptionType', 'No type'))
+        except Exception as e:
+            print(f"[ERROR] Could not parse error details: {e}")
+        sys.exit(1)
+
+    try:
+        result_data = result_response.json()
+        print(result_data)
+    except Exception as e:
+        print(f"[ERROR] Could not parse response JSON: {e}")
+        sys.exit(1)
 
 
 
