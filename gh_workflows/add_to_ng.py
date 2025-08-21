@@ -16,7 +16,7 @@ def main():
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--username', dest='username', help="Netapp useranme")
+    parser.add_argument('--username', dest='username', help="Netapp username")
     return parser.parse_args()
 
 def get_nag_users(oauth_data):
@@ -47,7 +47,7 @@ def add_user_to_nag(oauth_data, username):
     body = {
         'Roles':[{'Name': username, 'IsMember': 'yes'}]
     }
-    function_url_put = "https://nagapi.netapp.com//api/nag/ng-github-users" + "?impersonateuser=githubna@netapp.com"
+    function_url_put = "https://nagapi.netapp.com/api/nag/ng-github-users?impersonateuser=githubna@netapp.com"
     result_response = requests.put(function_url_put, headers=headers, data=json.dumps(body))
     print("API PUT response:")
     print(result_response.text)
