@@ -99,8 +99,24 @@ jobs:
         run: |
           python3 gh_workflows/add_to_ng.py --username "${{ steps.get_netapp_username.outputs.netapp_username }}"
 
+      - name: Report NG add failure and abort
+        if: failure() && steps.check_membership.outcome == 'failure' && steps.check_netapp_user.outcome == 'failure'
+        uses: octokit/request-action@v2.x
+        env:
+          GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}
+        with:
+          route: POST /repos/{repo}/issues/{issue_number}/comments
+          repo: ${{ github.repository }}
+          issue_number: ${{ github.event.issue.number }}
+          body: |
+            Hi @${{ github.actor }},
+
+            There was an error adding you to the ng-github-user group. Please check with the admin (ng-github-admins@netapp.com) for assistance.
+        continue-on-error: false
+        run: exit 1
+
       - name: tell user they have been added to NG
-        if: steps.check_membership.outcome == 'failure' && steps.check_netapp_user.outcome == 'failure'
+        if: success() && steps.check_membership.outcome == 'failure' && steps.check_netapp_user.outcome == 'failure'
         uses: octokit/request-action@v2.x
         env:
           GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}
