@@ -3,6 +3,8 @@ import urllib.parse
 import json
 import os
 import argparse
+import sys
+import time
 
 def main():
     options = parse_args()
@@ -16,7 +18,7 @@ def main():
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--username', dest='username', help="Netapp useranme")
+    parser.add_argument('--username', dest='username', help="Netapp username")
     return parser.parse_args()
 
 def get_nag_users(oauth_data):
@@ -46,17 +48,45 @@ def add_user_to_nag(oauth_data, username):
     body = {
         'Roles':[{'Name': username, 'IsMember': 'yes'}]
     }
-    function_url_put = "https://nagapi.netapp.com//api/nag/ng-github-users" + "?impersonateuser=githubna@netapp.com"
-    result_response = requests.put(function_url_put, headers=headers, data=json.dumps(body))
-    # Print out the response text before parsing it
-    print("API PUT response:")
-    print(result_response.text)
+    function_url_put = "https://nagapi.netapp.com/api/nag/ng-github-users?impersonateuser=githubna@netapp.com"
 
-    # Parse the JSON response and print the result
-    result_data = result_response.json()
-    print(result_data)
+    def do_request():
+        resp = requests.put(function_url_put, headers=headers, data=json.dumps(body))
+        print("API PUT response:")
+        print(resp.text)
+        return resp
 
+    max_attempts = 2
+    for attempt in range(1, max_attempts + 1):
+        result_response = do_request()
+        error_is_nullref = False
 
+        # Always try to parse the JSON response
+        try:
+            result_data = result_response.json()
+        except Exception as e:
+            print(f"[ERROR] Could not parse response JSON: {e}")
+            sys.exit(1)
+
+        # Check for HTTP error or logical API failure
+        if not result_response.ok or not result_data.get("Success", True):
+            print(f"[ERROR] HTTP {result_response.status_code}: {result_response.reason}")
+            print("[ERROR] API Error Message:", result_data.get('Message', 'No message'))
+            print("[ERROR] ExceptionMessage:", result_data.get('ExceptionMessage', 'No details'))
+            print("[ERROR] ExceptionType:", result_data.get('ExceptionType', 'No type'))
+            # Check for NullReferenceException
+            if result_data.get('ExceptionType') == 'System.NullReferenceException' or \
+               'Object reference not set to an instance of an object' in str(result_data.get('ExceptionMessage', '')) or \
+               any('Object reference not set to an instance of an object' in str(e) for e in result_data.get('Errors', [])):
+                error_is_nullref = True
+            if attempt < max_attempts and error_is_nullref:
+                print(f"[INFO] NullReferenceException detected, retrying in 2 seconds (attempt {attempt+1}/{max_attempts})...")
+                time.sleep(2)
+                continue
+            sys.exit(1)
+
+        print(result_data)
+        break
 
 def get_oauth_token(tenant_id, client_id, client_secret, scope):
     # Construct the URL and headers for the token request
