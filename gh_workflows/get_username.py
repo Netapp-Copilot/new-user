@@ -1,4 +1,5 @@
 import requests
+import sys
 import os
 import re
 from datetime import datetime, timedelta, timezone
@@ -16,6 +17,9 @@ def main():
 
     issue = get_issue_body(token, issue_number)
     netapp_username = get_netapp_username(issue)
+    if netapp_username not in get_all_users():
+        print(f'Error: In valid NetApp usernmae: {netapp_username}')
+        sys.exit(1)
     print(netapp_username)
 
 
@@ -48,6 +52,13 @@ def parse_args():
     parser.add_argument('--issue_number', dest='issue_number', help="GitHub useranme")
     return parser.parse_args()
 
+def get_all_users():
+    response = requests.get('http://onestop.netapp.com/dir/api/user',
+                            headers={'Accept': 'application/vnd.netapp.dir.api+json'})
+    user_names = []
+    for each in response.json()['payload']:
+        user_names.extend(each['user_name'])
+    return user_names
 
 if __name__ == "__main__":
     main()
