@@ -66,7 +66,7 @@ jobs:
           issue_number: ${{ github.event.issue.number }}
           body: |
             Hi @${{ github.actor }}, it appears that your NetApp username and GitHub username are the same. Please double-check that you’ve entered your NetApp username correctly. If you find that you entered the wrong username, kindly close this issue and open a new one with the correct username.
-            If both usernames are indeed the same, please reach out to ng-github-users for assistance.
+            If both usernames are indeed the same, please reach out to ng-github-admins for assistance.
         env:
           GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}
 
