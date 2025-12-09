@@ -23,7 +23,8 @@ body:
 - type: markdown
   attributes:
     value: >
-      # Set Up
+      ### Set Up
+      
       Please review the setup instruction [here on confluence](https://confluence.ngage.netapp.com/display/NGAGE/Copilot)
 
       ### Where Can I Use Copilot for NetApp Development?
