@@ -26,7 +26,7 @@ body:
       # Set Up
       Please review the setup instruction [here on confluence](https://confluence.ngage.netapp.com/display/NGAGE/Copilot)
 
-      # Where Can I Use Copilot for NetApp Development?
+      ### Where Can I Use Copilot for NetApp Development?
 
       GitHub Copilot users must adhere to the guidelines for Generative AI outlined in the legal department's [GenAI Guidance](https://netapp.sharepoint.com/:w:/r/sites/LegalCentral/_layouts/15/Doc.aspx?sourcedoc=%7B953E5610-67F6-4AFC-AF5F-9C27D20EA37A%7D&file=GenAI%20Preliminary%20Guidance.docx&action=default&mobileredirect=true).
 
@@ -34,11 +34,11 @@ body:
 
       Always check the documentation for updates, as it may become more permissive over time. As of March 5, 2024, the guidance is as follows:
 
-      ## For Internal Infrastructure and Services in NetApp Engineering:
+      #### For Internal Infrastructure and Services in NetApp Engineering:
 
       You may use approved secure sandboxes designated for internal infrastructure and services for any use case.
 
-      ## For Product Development (All Other Cases):
+      #### For Product Development (All Other Cases):
 
       You may use approved secure sandboxes intended for product development for the following internal use cases:
 
