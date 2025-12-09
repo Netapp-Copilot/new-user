@@ -13,7 +13,7 @@ body:
 
 - type: input
   attributes:
-    label: Netapp Username 
+    label: Netapp SSO Username (ex carchi) NOT email or Github Username
     description: >
       What is your NetApp username? Make sure to use your NetApp unix username (carchi) and **not** your github username or Netapp Email address.
     placeholder: carchi
