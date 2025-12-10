@@ -38,7 +38,7 @@ jobs:
           ADMIN_AUDIT: "${{ secrets.ADMIN_AUDIT }}"
         run: |
                 username=$(python3 gh_workflows/get_username.py --issue_number "${{ github.event.issue.number }}")
-                echo "::set-output name=netapp_username::$username"
+                echo "netapp_username=$username" >> $GITHUB_OUTPUT
         continue-on-error: true
 
       - name: Add label based on membership status

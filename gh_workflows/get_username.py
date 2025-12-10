@@ -1,6 +1,7 @@
 import requests
 import os
 import re
+import sys
 from datetime import datetime, timedelta, timezone
 import argparse
 info_pattern = re.compile(r'### Netapp SSO Username.*?\n\s*(\S+)', re.DOTALL)
@@ -16,17 +17,19 @@ def main():
 
     issue = get_issue_body(token, issue_number)
     netapp_username = get_netapp_username(issue)
-    print(netapp_username)
-
+    if netapp_username:
+        print(netapp_username)
+    else:
+        print("ERROR: NetApp username not found in issue", file=sys.stderr)
 
 def get_netapp_username(issue):
         # Extract NetApp username from the issue body
     match = info_pattern.search(issue['body'])
     if match:
-        netapp_username = match.group(1)
+        netapp_username = match.group(1).strip()
         return netapp_username
     else:
-        return False
+        return None
     
 def get_issue_body(token, issue_number):
     # GitHub API URL for the specific issue
