@@ -3,7 +3,7 @@ import os
 import re
 from datetime import datetime, timedelta, timezone
 
-info_pattern = re.compile(r'### Netapp Username\s*\n\s*(\S+)')
+info_pattern = re.compile(r'### Netapp SSO Username.*?\n\s*(\S+)', re.DOTALL)
 owners = ['suhasbshekar', 'carchi8py', 'wenjun666', 'chuyich']
 
 
