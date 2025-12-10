@@ -31,9 +31,10 @@ def main():
                 print(f"Failed to retrieve NetApp Username from issue: [{issue['title']}]({issue['html_url']})")
                 continue
             github_username = issue['user']['login']
-            print(github_username)
+            print(f"Processing issue: {issue['title']}")
+            print(f"GitHub username: {github_username}")
             if not netapp_username:
-                print(f"Failed to retrieve NetApp Username from issue: [{issue['title']}]({issue['html_url']})")
+                print(f"Skipping issue - no NetApp username found: [{issue['title']}]({issue['html_url']})")
                 continue
             netapp_username = netapp_username.lower()
             if netapp_username in ng_usernames:
@@ -68,15 +69,17 @@ def main():
 
 def get_netapp_username(issue):
         # Extract NetApp username from the issue body
+    print("Issue body:")
+    print(repr(issue['body']))  # Use repr to see exact characters
     match = info_pattern.search(issue['body'])
-    print(issue['body'])
     if match:
-        netapp_username = match.group(1)
-        print(netapp_username + " found")
+        netapp_username = match.group(1).strip()  # Strip whitespace
+        print(f"NetApp username '{netapp_username}' found")
         return netapp_username
     else:
-        print(f"Issue: {issue['title']} - NetApp Username not found")
-        return False
+        print(f"Issue: {issue['title']} - NetApp Username not found in body")
+        print(f"Pattern used: {info_pattern.pattern}")
+        return None
     
 def add_user_to_team(username, token):
     """Add a user to the team."""
