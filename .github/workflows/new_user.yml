@@ -3,6 +3,7 @@ name: Add user to org
 on:
   issues:
     types: [opened]
+  workflow_dispatch:
 
 jobs:
   print_username:
