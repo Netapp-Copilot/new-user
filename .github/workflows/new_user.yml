@@ -66,7 +66,7 @@ jobs:
           issue_number: ${{ github.event.issue.number }}
           body: |
             Hi @${{ github.actor }}, it appears that your NetApp username and GitHub username are the same. Please double-check that you’ve entered your NetApp username correctly. If you find that you entered the wrong username, kindly close this issue and open a new one with the correct username.
-            If both usernames are indeed the same, please reach out to ng-github-admins for assistance.
+            If both usernames are indeed the same, please reach out to enghelp+github@netapp.com for assistance.
         env:
           GITHUB_TOKEN: ${{ secrets.ADMIN_GITHUB_TOKEN }}
 
@@ -111,7 +111,7 @@ jobs:
           body: |
             Hi @${{ github.actor }},
 
-            There was an error adding you to the ng-github-user group. Please check with the admin (ng-github-admins@netapp.com) for assistance.
+            There was an error adding you to the ng-github-users group. Please check with the admin (enghelp+github@netapp.com) for assistance.
 
       - name: Abort workflow after NG add failure
         if: failure() && steps.check_membership.outcome == 'failure' && steps.check_netapp_user.outcome == 'failure'
@@ -129,7 +129,7 @@ jobs:
           body: >
             Hi @${{ github.actor }},
 
-            You have been added to the ng-github-user group. In approximately one hour, you will receive an invitation email from GitHub to join the Netapp-Copilot organization. The email will be sent from noreply@github.com.
+            You have been added to the ng-github-users group. In approximately one hour, you will receive an invitation email from GitHub to join the Netapp-Copilot organization. The email will be sent from noreply@github.com.
 
             Please make sure to accept the invitation in order to gain access to Copilot. If you don’t see the email, kindly check your junk mail folder. Once you accept the invitation, you will have access to Copilot.
 
@@ -214,7 +214,7 @@ jobs:
           repo: ${{ github.repository }}
           issue_number: ${{ github.event.issue.number }}
           body: >
-            Hey @${{ github.actor }}, You Already have access to Copilot. If your having issues or hitting an error please email ng-github-admins@netapp.com and let us know what the issue is.
+            Hey @${{ github.actor }}, You Already have access to Copilot. If your having issues or hitting an error please email enghelp+github@netapp.com and let us know what the issue is.
 
       - name: Close the issue
         if: steps.check_membership.outcome == 'success' && steps.check_netapp_user.outcome == 'success' && steps.check_active_group.outcome == 'success'
